@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from .models import Person
+from .models import Person, CarEvent
 
 
 class PersonTable(tables.Table):
@@ -7,3 +7,18 @@ class PersonTable(tables.Table):
         model = Person
         template_name = "django_tables2/bootstrap.html"
         fields = ("name",)
+
+
+class CarEventTable(tables.Table):
+    class Meta:
+        model = CarEvent
+        template_name = "django_tables2/bootstrap.html"
+        fields = ("ordNumber",
+                  "carNumber",
+                  "trainIndex",
+                  "trainNumber",
+                  "carStatus",
+                  "invoiceId",
+                  "invoiceNumber",
+                  "stateId",
+                  "lastOperDt",)

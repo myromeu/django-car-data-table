@@ -16,15 +16,17 @@ class CarEvent(models.Model):
     stateId = models.IntegerField()    # 34,
     lastOperDt = models.DateTimeField(null=True, blank=True) # "2019-08-11T20:51:00.000Z"
 
-    @staticmethod
-    def create(**kwargs):
-        movie = .objects.create(
-            popularity=kwargs['99popularity'],
-            director=kwargs['director'],
-            imdb_score=kwargs['imdb_score'],
-            name=kwargs['name']
+    @classmethod
+    def create(cls, **kwargs):
+        carevent, _ = cls.objects.get_or_create(
+            ordNumber=kwargs["ordNumber"],
+            carNumber=kwargs["carNumber"],
+            trainIndex=kwargs["trainIndex"],
+            trainNumber=kwargs["trainNumber"],
+            carStatus=kwargs["carStatus"],
+            invoiceId=kwargs["invoiceId"],
+            invoiceNumber=kwargs["invoiceNumber"],
+            stateId=kwargs["stateId"],
+            lastOperDt=kwargs["lastOperDt"],
         )
-        for genre_name in kwargs['genre']:
-            genre, created = Genre.objects.get_or_create(name=genre_name)
-            movie.genre.add(genre)
-        return movie
+        return carevent
