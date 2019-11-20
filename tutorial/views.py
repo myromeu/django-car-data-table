@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django_tables2 import SingleTableView
 
+from tutorial.forms import CarEventForm
 from .models import Person, CarEvent
 from .tables import PersonTable, CarEventTable
 
@@ -22,6 +23,22 @@ class CarEventListView(SingleTableView):
     model = CarEvent
     table_class = CarEventTable
     template_name = 'tutorial/carevents.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'edit' in self.request.GET:
+            form = CarEventForm(instance=CarEvent.objects.get(ordNumber=self.request.GET['edit']))
+            context['careventform'] = form
+        return context
+
+    def post(self, *args, **kwargs):
+        carevent = CarEvent.objects.get(ordNumber=self.request.POST['ordNumber'])
+        form = CarEventForm(self.request.POST, instance=carevent)
+        if form.is_valid():
+            form.save()
+            print('invoceId changed', carevent.invoiceId)
+
+        return redirect('car_events')
 
 
 class PersonListView(SingleTableView):

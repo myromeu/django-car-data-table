@@ -18,10 +18,7 @@ class TutorialConfig(AppConfig):
             json_data = json.loads(table_data.read())
 
             for car in json_data:
-                # make CarEvent objects
-                # on stop server truncate the objects mb not
-                car_event = CarEvent.create(**car)
-                print(car)
-
+                if not CarEvent.objects.filter(ordNumber=car['ordNumber']).exists():
+                    CarEvent.create(**car)
             # for ce in CarEvent.objects.all():
             #     print(f'{ce.ordNumber} - {ce.carNumber} - {ce.carStatus}')

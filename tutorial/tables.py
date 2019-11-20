@@ -13,12 +13,4 @@ class CarEventTable(tables.Table):
     class Meta:
         model = CarEvent
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("ordNumber",
-                  "carNumber",
-                  "trainIndex",
-                  "trainNumber",
-                  "carStatus",
-                  "invoiceId",
-                  "invoiceNumber",
-                  "stateId",
-                  "lastOperDt",)
+        fields = tuple(CarEvent.labels.keys())

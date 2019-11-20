@@ -1,11 +1,52 @@
 {% load render_table from django_tables2 %}
 <!doctype html>
 <html>
-    <head>
-        <title>Данные по вагонам</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    </head>
-    <body>
-        {% render_table table %}
-    </body>
+<head>
+    <title>Данные по вагонам</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+{% if careventform %}
+    <div id="modal-form" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактирование информации по вагону</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        {{ careventform.as_p }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% render_table table %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script lang="js">
+    $(document).ready(function () {
+        $("#modal-form").modal();
+    });
+
+    $('table tbody tr').click(function () {
+    let carevent = $(this).closest('tr').find('td')[0].innerText;
+    window.location = '/carevents/?edit='+carevent;
+});
+</script>
+</body>
 </html>
