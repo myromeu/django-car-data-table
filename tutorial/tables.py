@@ -14,3 +14,7 @@ class CarEventTable(tables.Table):
         model = CarEvent
         template_name = "django_tables2/bootstrap4.html"
         fields = tuple(CarEvent.labels.keys())
+
+    def change_header(self, col_names={}):
+        for key, value in col_names.items():
+            self.base_columns[key].verbose_name = value

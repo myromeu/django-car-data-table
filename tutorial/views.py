@@ -26,6 +26,8 @@ class CarEventListView(SingleTableView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['table'].change_header(CarEvent.labels)
+
         if 'edit' in self.request.GET:
             form = CarEventForm(instance=CarEvent.objects.get(ordNumber=self.request.GET['edit']))
             context['careventform'] = form
@@ -36,7 +38,6 @@ class CarEventListView(SingleTableView):
         form = CarEventForm(self.request.POST, instance=carevent)
         if form.is_valid():
             form.save()
-            print('invoceId changed', carevent.invoiceId)
 
         return redirect('car_events')
 
