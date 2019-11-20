@@ -23,6 +23,7 @@ class CarEventListView(SingleTableView):
     table_class = CarEventTable
     template_name = 'tutorial/carevents.html'
 
+
 class PersonListView(SingleTableView):
     model = Person
     table_class = PersonTable

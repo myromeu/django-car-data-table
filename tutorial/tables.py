@@ -12,7 +12,7 @@ class PersonTable(tables.Table):
 class CarEventTable(tables.Table):
     class Meta:
         model = CarEvent
-        template_name = "django_tables2/bootstrap.html"
+        template_name = "django_tables2/bootstrap4.html"
         fields = ("ordNumber",
                   "carNumber",
                   "trainIndex",
