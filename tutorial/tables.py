@@ -12,7 +12,7 @@ class PersonTable(tables.Table):
 class CarEventTable(tables.Table):
     class Meta:
         model = CarEvent
-        template_name = "django_tables2/bootstrap4.html"
+        template_name = "django_tables2/cartable.html"
         fields = tuple(CarEvent.labels.keys())
 
     def change_header(self, col_names={}):

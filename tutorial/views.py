@@ -28,6 +28,7 @@ class CarEventListView(SingleTableView):
         context = super().get_context_data(**kwargs)
         context['table'].change_header(CarEvent.labels)
         context['table'].default = ''
+        context['table'].paginate(page=self.request.GET.get("page", 1), per_page=10)
 
         if 'edit' in self.request.GET:
             form = CarEventForm(instance=CarEvent.objects.get(ordNumber=self.request.GET['edit']))
