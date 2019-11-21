@@ -27,6 +27,7 @@ class CarEventListView(SingleTableView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['table'].change_header(CarEvent.labels)
+        context['table'].default = ''
 
         if 'edit' in self.request.GET:
             form = CarEventForm(instance=CarEvent.objects.get(ordNumber=self.request.GET['edit']))

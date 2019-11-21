@@ -18,3 +18,10 @@ class CarEventTable(tables.Table):
     def change_header(self, col_names={}):
         for key, value in col_names.items():
             self.base_columns[key].verbose_name = value
+
+    def render_lastOperDt(self, value):
+        import datetime
+        if value:
+            return value.strftime('%d.%m.%Y %H:%M')
+        else:
+            return '–'
