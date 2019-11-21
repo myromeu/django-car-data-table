@@ -7,9 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
+        .filter-form .form-row,
+        .filter-form button {
+            margin-bottom: 0.5em;
+            margin-left: 0.25em;
+        }
+
+        .filter-form .form-row:first-child {
+            margin-top: 0.5em;
+        }
+
         .table tbody tr {
             cursor: pointer;
         }
+
         .table tbody tr:hover {
             background: #ADD8E655;
         }
@@ -40,6 +51,53 @@
         </div>
     </div>
 {% endif %}
+
+{% if filter %}
+    <form action="" method="get" class="form filter-form">
+        <div class="form-row">
+            <div class="col">
+            № п/п: {{ filter.form.ordNumber }}
+            </div>
+            <div class="col">
+            Номер вагона: {{ filter.form.carNumber }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+            Индекс поезда: {{ filter.form.trainIndex }}
+            </div>
+            <div class="col">
+            Номер поезда: {{ filter.form.trainNumber }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+            Статус: {{ filter.form.carStatus }}
+            </div>
+            <div class="col">
+            ИД накладной: {{ filter.form.invoiceId }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+            № накладной: {{ filter.form.invoiceNumber }}
+            </div>
+            <div class="col">
+            stateId: {{ filter.form.stateId }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+            Дата-время операции: {{ filter.form.lastOperDt }}
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Поиск</button>
+        <button type="reset" class="btn btn-danger">Сбросить фильтр</button>
+    </form>
+{% endif %}
+
 {% render_table table %}
 
 
@@ -52,9 +110,15 @@
     });
 
     $('table tbody tr').click(function () {
-    let carevent = $(this).closest('tr').find('td')[0].innerText;
-    window.location = '/carevents/?edit='+carevent;
-});
+        let carevent = $(this).closest('tr').find('td')[0].innerText;
+        window.location = '/carevents/?edit=' + carevent;
+    });
+
+    $('.filter-form button[type="reset"]').click(function (e) {
+        e.preventDefault();
+        $(this.form).find('input').val('');
+        $(this.form).trigger('submit')
+    })
 </script>
 </body>
 </html>

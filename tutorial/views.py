@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 
 from django.views.generic import ListView
-from django_tables2 import SingleTableView
+from django_filters.views import FilterView
+from django_tables2 import SingleTableView, SingleTableMixin
 
 from tutorial.forms import CarEventForm
 from .models import Person, CarEvent
-from .tables import PersonTable, CarEventTable
+from .tables import PersonTable, CarEventTable, CarEventFilter
 
 
 # class PersonListView(ListView):
@@ -19,9 +20,10 @@ def remove_table_data(request):
     return redirect('car_events')
 
 
-class CarEventListView(SingleTableView):
+class CarEventListView(SingleTableMixin, FilterView):
     model = CarEvent
     table_class = CarEventTable
+    filterset_class = CarEventFilter
     template_name = 'tutorial/carevents.html'
 
     def get_context_data(self, **kwargs):

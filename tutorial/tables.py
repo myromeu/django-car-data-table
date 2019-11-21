@@ -1,5 +1,14 @@
 import django_tables2 as tables
 from .models import Person, CarEvent
+import django_filters
+
+
+class CarEventFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='iexact')
+
+    class Meta:
+        model = CarEvent
+        fields = tuple(CarEvent.labels.keys())
 
 
 class PersonTable(tables.Table):
